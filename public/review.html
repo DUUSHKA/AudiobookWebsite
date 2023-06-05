@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Leave a Review</title>
+</head>
+<body>
+  <h1>Leave a review</h1>
+  <form action="/review" method="post">
+    <input type="hidden" name="BookID" value="<%= product.BookID %>">
+    <label for="review">Leave a review:</label>
+    <input type="text" id="review" name="review" required><br>
+
+    <label for="rating">Rating:</label>
+    <input type="text" id="rating" name="rating" required><br>
+
+
+    <input type="submit" value="Submit a review">
+  </form>
+</body>
+</html>

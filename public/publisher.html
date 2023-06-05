@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>RU Listening</title>
+</head>
+<body>
+	<header>
+		<nav>
+			<div class="logo">
+				<img src="image/logo.jpg" alt="Logo">
+			</div>
+			<ul class="navbar-items">
+				<form action="/logout" method="POST">
+					<button class="sign-out" type="submit">LOG OUT</button>
+				</form>
+			</ul>
+		</nav>
+	</header>
+	<div class="container">
+		<main>
+			<h1>Add a Book</h1>
+			<form action="/add" method="post">
+				<label for="newTitle">Title:</label>
+				<input type="text" id="newTitle" name="newTitle" required><br>
+        		<label for="newAuthor">Author:</label>
+				<input type="text" id="newAuthor" name="newAuthor" required><br>
+				<label for="newGenre">Genre:</label>
+				<input type="text" id="newGenre" name="newGenre" required><br>
+				<label for="newNarrator">Narrator:</label>
+				<input type="text" id="newNarrator" name="newNarrator" required><br>
+				<br>Add a BookID in this format:"B5"</br>
+				<label for="newBookID">BookID:</label>
+				<input type="text" id="newBookID" name="newBookID" required><br>
+				<label for="newPrice">Price:</label>
+				<input type="text" id="newPrice" name="newPrice" required><br>
+				<label for="newSummary">Enter Book Summary:</label>
+				<br>
+					<textarea rows="5" cols="60" name="newSummary" required></textarea>
+				<br>
+				<input type="submit" value="submit">
+			</form>
+		</main>
+		<footer>
+			<p>&copy; RU Listening</p>
+		</footer>
+	</div>
+</body>
+</html>

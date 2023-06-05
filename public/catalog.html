@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RU Listening</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  </head> 
+  <body>    
+    <header>
+      <nav>
+              <div class="logo">
+                <img src="image/logo.jpg" alt="Logo">
+              </div>
+              <ul class="navbar-items"> 
+                <li><a href="/">Home</a></li>
+                <li><a href="/catalog">Shop</a></li>
+                <li><a href="#">Account</a></li>
+              <li><a href="http://localhost:8081/cart">Cart</a></li>
+                <li><a href="http://localhost:3000/login">Login</a></li>
+                <form action="http://localhost:3000/logout" method="POST">
+                  <button class = "sign-out" type="submit">LOG OUT</button>
+                </form>
+              </ul>
+      </nav>   
+    </header> 
+    <form action="/catalog" method="get">
+        <input type="text" name="search" placeholder="Search...">
+        <button type="submit">Search</button>
+    </form>   
+    <div id="autocomplete-container"></div>
+<script>
+    $(document).ready(function() {
+        // autocomplete widget
+        $('#search-input').autocomplete({
+            source: function(request, response) {
+                //get search term from input field
+                var searchTerm = request.term;
+                
+                // Send get request to the server to retrieve the autocomplete suggestions
+                $.get('/autocomplete', {term: searchTerm}, function(data) {
+                    response(data);
+                });
+            },
+            minLength: 2 
+        });
+    });
+</script>
+          <% Catalog.forEach(function(product) { %>
+            <div class="catalog-card">
+              <center><img src="image/<%= product.BookID %>.jpg"></center>
+              <div class="catalog-card-info">
+                <h2><%= product.BookTitle %></h2>
+                <h4>Author: <%= product.Author %></h4>
+                <p>Narrator: <%= product.Narrator %></p>
+                <h3 class="price">$<%= product.Price.toFixed(2) %></h3>
+                <form action="/cart" method="post">
+                  <input type="hidden" name="BookID" value="<%= product.BookID %>">
+                  <input type="hidden" name="BookTitle" value="<%= product.BookTitle %>">
+                  <input type="hidden" name="Price" value="<%= product.Price %>">
+                  <button type="submit">Add To Cart</button>
+                </form>
+                <form action="/addToWishlist" method="post">
+                  <input type="hidden" name="BookID" value="<%= product.BookID %>">
+                  <input type="hidden" name="BookTitle" value="<%= product.BookTitle %>">
+                  <input type="hidden" name="Price" value="<%= product.Price %>">
+                  <button type="submit">Add To Wishlist</button>
+                </form>
+                <form action="/Showreview" method="get">
+                  <input type="hidden" name="BookID" value="<%= product.BookID %>">
+                  <button type="submit">Reviews</button>
+                </form>
+              </div>
+            </div>
+          <% }); %>
+      </body>
+      <style>
+        body {
+          font-family: 'Poppins', sans-serif;
+          background-image: url('image/lib.jpeg');
+          color: #111;
+          margin: 0;
+          padding: 0;
+          background-repeat: repeat;
+          background-size:contain;
+          position: relative;
+        padding-top: 100px; /* adjust the value as needed */
+      }
+        /*For the catalog stuff*/
+      /* Set the border color of the catalog cards to red */
+      #search-suggestions {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid #ccc;
+      border-top: none;
+      }
+    
+      #search-suggestions li {
+      padding: 8px 12px;
+      cursor: pointer;
+      }
+    
+      #search-suggestions li:hover {
+      background-color: #f2f2f2;
+      }
+    
+      .catalog-card {
+            align-self: center;
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            border: 3px solid #a72032;
+            background-color: #ffffff96;
+            width:400px;
+      }
+    
+    .catalog-card img {
+            align-items: center;
+            width: 200px;
+            height: 300px;
+            margin-right: 20px;
+    }
+    .catalog-card-info {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+    }
+          
+      /* Set the font color of the book titles to red */
+      .catalog-card-info h2 {
+        margin: 0;
+        color: #a72032;
+      }
+    
+      /* Set the font color of the buttons to white and the background to red */
+      .catalog-card-info button {
+        align-self: flex-end;
+        margin-top: auto;
+        background-color: #a72032;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 4px;
+      }
+      form {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    input[type="text"] {
+      align-items: center;
+      padding: 8px;
+      border: 2px solid #1c1a1a;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    
+    button[type="submit"] {
+      background-color: #a72032;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+    
+    
+      /* On hover, change the button background color to white and the font color to deep red */
+      .catalog-card-info button:hover {
+        background-color: white;
+        color: #a72032;
+      }
+      /* Navigation styles */
+    nav {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        height: 70px;
+        width: 120%;
+        max-width: 1400px; /* adjust as needed */
+        background-color: #a72032;
+        justify-content: space-between;
+        align-items: left;
+        padding: 0 30px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        z-index: 9999;
+      }
+      
+      nav .logo {
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+      }
+      
+      nav .logo img {
+        height: 70px;
+      }
+      
+      @media screen and (max-width: 920px) {
+        nav .logo {
+          width: 100%;
+          justify-content: center;
+        }
+        nav .logo img {
+          height: 80px;
+        }
+      }
+      
+      nav ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center; /* new line to vertically center the items */
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex: 1;
+      }
+    
+    nav ul li {
+      margin: 0 20px; /* increase margin for more space between items */
+    }
+    
+    nav ul li:first-child {
+      margin-left: 0;
+    }
+    
+    nav ul li a {
+      font-size: 16px;
+      font-weight: 500;
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      padding: 10px 20px; /* add padding for easier click target */
+    }
+      
+      nav ul li a:hover {
+        color: #a72032;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+      }
+      
+      nav .menu-btn i {
+        color: #fff;
+        font-size: 22px;
+        cursor: pointer;
+        display: none;
+      }
+      
+      input[type='checkbox'] {
+        display: none;
+      }
+    
+    @media (max-width: 1000px) {
+    nav {
+    padding: 0 40px 0 50px;
+    }
+    }
+    
+    @media (max-width: 920px) {
+    nav .menu-btn i {
+    display: block;
+    }
+    #click:checked ~ .menu-btn i:before {
+    content: "\f00d";
+    }
+    nav ul {
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    background-color: #000;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+    display: block;
+    transition: all 0.3s ease;
+    }
+    #click:checked ~ ul {
+    left: 0;
+    }
+    nav ul li {
+    width: 100%;
+    margin: 40px 0;
+    }
+    nav ul li a {
+    width: 100%;
+    margin-left: -100%;
+    display: block;
+    font-size: 20px;
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    #click:checked ~ ul li a {
+    margin-left: 0px;
+    }
+    nav ul li a.active,
+    nav ul li a:hover {
+    background-color: #a72032;
+    color: #fff;
+    }
+    }
+    
+    .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: -1;
+    width: 100%;
+    padding: 0 30px;
+    }
+    
+    .content div {
+    font-size: 40px;
+    font-weight: 700;
+    color: #c62828;
+    }
+    /* Style the sign-out button */
+    .sign-out {
+        font-family: 'Poppins', sans-serif;
+        background: none;
+        font-size: 16px;
+        font-weight: 500;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        margin-left: auto;
+      }
+      
+      /* Change the color of the sign-out button on hover */
+      .sign-out:hover {
+        color: #8c1010;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+      }
+      
+      /* Remove the border and background from the Login button */
+      .navbar-items li:first-child a {
+        border: none;
+        background-color: transparent;
+      }
+      
+      /* Move the Log out button to the right */
+      .navbar-items form {
+        margin-left: auto;
+      }
+      .hero h1 {
+        display: block;
+    
+      }
+      h1 {
+        margin-top: 100px;
+        text-align: center;
+        color: #000000;
+        font-size: 60px;
+      }
+      .btn {
+        display: block;
+        width: 200px;
+        margin: 0 auto;
+        padding: 10px 20px;
+        background-color: #8c1010;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      
+      .btn:hover {
+        background-color: #fff;
+        color: #a72032;
+        border: 2px solid #a72032;
+      }
+      </style>
+    </html>
+    

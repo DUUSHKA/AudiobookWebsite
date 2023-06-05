@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Your Reviews</title>
+</head>
+<body>
+  <h1>Your Reviews</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Book Title</th>
+        <th>Review</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% reviews.forEach(review => { %>
+        <tr>
+          <td><%= review.BookTitle %></td>
+          <td><%= review.review %></td>
+          <td>
+            <form method="post" action="/review">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="BookID" value="<%= review.BookID %>">
+              <input type="hidden" name="review" value="<%= review.review %>">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>
