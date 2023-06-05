@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Books</title>
+</head>
+<body>
+  <h1>Your Books</h1>
+
+  <% if (books.length === 0) { %>
+    <p>You haven't purchased any books yet.</p>
+  <% } else { %>
+    <ul>
+      <% books.forEach(book => { %>
+        <li>
+          <%= book.BookTitle %>
+          <a href="http://localhost:3001/audiobook?bookId=<%= book.BookID %>">
+            Listen to Book
+          </a>
+          <form action="/review" method="POST">
+            <input type="text" name="review" placeholder="Post a Review...">
+            <button type="submit">Submit</button>
+        </form>   
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+
+  <a href="http://localhost:8081">Back to Home</a>
+</body>
+</html>

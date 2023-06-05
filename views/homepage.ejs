@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>RU Listening</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header>
+        
+		<nav>
+            <div class="logo">
+                <img src="image/logo.jpg" alt="Logo">
+            </div>
+            <ul class="navbar-items"> <!-- add class name here -->
+              <li><a href="http://localhost:8081/">Home</a></li>
+              <li><a href="http://localhost:8081/catalog">Shop</a></li>
+              <li><a href="#">Account</a></li>
+              <li><a href="http://localhost:8081/cart">Cart</a></li>
+              <li><a href="http://localhost:3000/login">Login</a></li>
+              
+              <form action="http://localhost:3000/logout" method="POST">
+                <button class = "sign-out" type="submit">LOG OUT</button>
+              </form>
+            </ul>
+          </nav>
+          
+	</header>
+  <section class = "block">
+    <h1 style="margin-bottom: 10px;">Welcome to RU Listening</h1>
+    <center><p>Listen to the best books and discover great deals on our latest audio collections.</p></center>
+    <form action="http://localhost:8081/catalog" method="GET">
+      <center><button class = "get" type="submit">SHOP NOW</button></center>
+    </form>     
+     <section class="gallery">
+      <div class="gallery-item">
+        <img src="image/R1.jpg">
+        <h3>Pride and Prejudice</h3>
+        <form action="http://localhost:8081/cart" method="POST">
+        <input type="hidden" name="BookID" value="R1">
+        <input type="hidden" name="BookTitle" value="Pride and Prejudice">
+        <input type="hidden" name="Price" value="7.99">
+        <button class = "get" type="submit">GET NOW</button>        
+      </form>
+      </div>
+        <div class="gallery-item">
+        <img src="image/H1.jpg">
+        <h3>The Kite Runner</h3>
+        <form action="http://localhost:8081/cart" method="POST">
+        <input type="hidden" name="BookID" value="H1">
+        <input type="hidden" name="BookTitle" value="The Kite Runner">
+        <input type="hidden" name="Price" value="15.00">
+        <button class = "get" type="submit">GET NOW</button>        
+      </form>
+      </div>
+        <div class="gallery-item">
+        <img src="image/F3.jpg">
+        <h3>Percy Jackson</h3>
+        <form action="http://localhost:8081/cart" method="POST">
+        <input type="hidden" name="BookID" value="F3">
+        <input type="hidden" name="BookTitle" value="Percy Jackson">
+        <input type="hidden" name="Price" value="16.99">
+        <button class = "get" type="submit">GET NOW</button>        
+      </form>
+      </div>
+      </section>
+  </section>
+          
+<footer>
+		<p>&copy; RU Listening</p>
+</footer>
+</body>
+</html>

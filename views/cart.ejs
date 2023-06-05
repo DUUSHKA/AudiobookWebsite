@@ -1,1 +1,366 @@
+<h1>Shopping Cart</h1>
+<body>
+	<header>   
+		<nav>
+            <div class="logo">
+                <img src="image/logo.jpg" alt="Logo">
+            </div>
+            <ul class="navbar-items"> <!-- add class name here -->
+              <li><a href="http://localhost:8081/">Home</a></li>
+              <li><a href="http://localhost:8081/catalog">Shop</a></li>
+              <li><a href="#">Account</a></li>
+              <li><a href="http://localhost:8081/cart">Cart</a></li>
+              <li><a href="http://localhost:3000/login">Login</a></li>
+              
+              <form action="http://localhost:3000/logout" method="POST">
+                <button class = "sign-out" type="submit">LOG OUT</button>
+              </form>
+            </ul>
+    </nav>
+          
+	</header>
+<ul>
+  <% for (var i = 0; i < cart.length; i++) { %>
+    <li>
+      <img src="image/<%= bookid[i]%>.jpg" alt="<%= cart[i].BookTitle %>">
+      <div>
+        <h3><%= cart[i].BookTitle %></h3>
+        <p style="text-align: right;">$<%= cart[i].Price %></p>
+        <form method="DELETE" action="/cart">
+          <input type="hidden" name="BookID" value="<%=bookid[i]%>">
+          <button class="delete-button" type="submit">Delete from Cart</button>
+        </form>
+      </div>
+    </li>
+  <% } %>
+</ul>
+<p style="margin-bottom: 2rem; text-align: right;font-size: larger;font-weight: bold;">Total Price: $<%= totalPrice %></p>
+<form method="POST" action="/checkout">
+  <button class="checkout-button" type="submit">Checkout</button>
+</form>
+</body>
+<style>
 
+  
+  h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+  }
+
+  li img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    margin-right: 1rem;
+  }
+
+  li div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  li h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  li p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  li .delete-button {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: #8c1010;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  li .delete-button:hover {
+    background-color: #8c1010;
+  }
+  li p {
+  font-weight: bold;
+  right: 0;
+  margin-top: 5rem;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  }
+  
+
+  form button.checkout-button {
+    position: absolute;
+    right: 0;
+    font-size: 1.2rem;
+    background-color: #8c1010;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  form button.checkout-button:hover {
+    background-color: #8c1010;
+  }
+
+/*Nave bar styles*/
+nav {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 70px;
+    width: 120%;
+    max-width: 1400px; /* adjust as needed */
+    background-color: #a72032;
+    justify-content: space-between;
+    align-items: left;
+    padding: 0 30px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+  }
+  
+  nav .logo {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  nav .logo img {
+    height: 70px;
+  }
+  
+  @media screen and (max-width: 920px) {
+    nav .logo {
+      width: 100%;
+      justify-content: center;
+    }
+    nav .logo img {
+      height: 80px;
+    }
+  }
+  
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center; /* new line to vertically center the items */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+  }
+
+nav ul li {
+  margin: 0 20px; /* increase margin for more space between items */
+}
+
+nav ul li:first-child {
+  margin-left: 0;
+}
+
+nav ul li a {
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  padding: 10px 20px; /* add padding for easier click target */
+}
+  
+  nav ul li a:hover {
+    color: #8c1010;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  input[type='checkbox'] {
+    display: none;
+  }
+
+@media (max-width: 1000px) {
+nav {
+padding: 0 40px 0 50px;
+}
+}
+
+@media (max-width: 920px) {
+nav ul {
+position: fixed;
+top: 80px;
+left: -100%;
+background-color: #000;
+height: 100vh;
+width: 100%;
+text-align: center;
+display: block;
+transition: all 0.3s ease;
+}
+#click:checked ~ ul {
+left: 0;
+}
+nav ul li {
+width: 100%;
+margin: 40px 0;
+}
+nav ul li a {
+width: 100%;
+margin-left: -100%;
+display: block;
+font-size: 20px;
+transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+#click:checked ~ ul li a {
+margin-left: 0px;
+}
+nav ul li a.active,
+nav ul li a:hover {
+background-color: #c62828;
+color: #fff;
+}
+}
+
+.content {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+text-align: center;
+z-index: -1;
+width: 100%;
+padding: 0 30px;
+}
+
+.content div {
+font-size: 40px;
+font-weight: 700;
+color: #c62828;
+}
+/* Style the sign-out button */
+.sign-out {
+    font-family: 'Poppins', sans-serif;
+    background: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  
+  /* Change the color of the sign-out button on hover */
+  .sign-out:hover {
+    color: #8c1010;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .get {
+    font-family: 'Poppins', sans-serif;
+    background-color: #8c1010;;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  
+  /* Change the color of the sign-out button on hover */
+  .get:hover {
+    color: #8c1010;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+  }
+    
+  /* Move the Log out button to the right */
+  .navbar-items form {
+    margin-left: auto;
+  }
+  .hero h1 {
+    display: block;
+
+  }
+  h1 {
+    margin-top: 100px;
+    text-align: center;
+    color: #000000;
+    font-size: 60px;
+  }
+  .btn {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #8c1010;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .btn:hover {
+    background-color: #fff;
+    color: #8c1010;
+    border: 2px solid #8c1010;
+  }
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .gallery-item {
+    margin: 10px;
+    text-align: center;
+  }
+  
+  .gallery-item img {
+    width: 200px;
+    height: 300px;
+  }
+  
+    h3 {
+    margin-top: 20px;
+    text-align: center;
+  }
+</style>
